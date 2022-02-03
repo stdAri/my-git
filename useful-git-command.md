@@ -38,6 +38,27 @@ Git 配置文件分为三级，系统级(--system)、用户级(--global)和目�
 - 重命名某个文件：`git mv filename newfilename` 或者直接修改完毕文件名 ，进行`git add -A && git commit -m 'commit message'` Git会自动识别是重命名了文件
 - 获取远程最新代码到本地：`git pull (origin branchname)` 可以指定分支名，也可以忽略。pull 命令自动 fetch 远程代码并且 merge，如果有冲突，会显示在状态栏，需要手动处理。更推荐使用：`git fetch` 之后 `git merge --no-ff origin branchname` 拉取最新的代码到本地仓库，并手动 merge 。
 
+# Add
+有时同时改了两个功能A和B，并且都没有提交，这两个功能涉及到了同一个文件a，都进行了修改，但在某次提交中只希望提交功能A，所以只能提交文件a的关于功能A的部分修改，我们可以使用下面的命令对文件a进行选择性提交：`git add --patch <filename>`或者`git add -p <filename>`
+
+执行此命令后，Git将开启一个交互式模式，它会将文件a分解成它认为合理的“块（hunk）”（文件的一部分），并和你分别确认如何处理每处的修改：`Stage this hunk [y,n,a,d,g,/,j,J,k,K,s,e,?]?`
+
+以下是每个选项的说明：
+- y 暂存该块
+- n 不暂存该块
+- a 暂存该块及该文件中的剩余所有块
+- d 不暂存该块及该文件中的剩余所有块
+- g 选择并跳转至指定块块
+- / 搜索与给定的正则表达式匹配的块
+- j 离开当前未定的块，处理下一个未定的块
+- J 离开当前未定的块，处理下一个块
+- k 离开当前未定的块，处理上一个未定的块
+- K 离开当前未定的块，处理上一个块
+- s 将当前的大块分成更小的块
+- e 手动编辑当前的块
+- ? 打印帮助
+
+
 # Repository
 - 检出（clone）仓库代码：`git clone repository-url` / `git clone repository-url local-directoryname`
 	+ 例如，clone jquery 仓库到本地： `git clone git://github.com/jquery/jquery.git`
